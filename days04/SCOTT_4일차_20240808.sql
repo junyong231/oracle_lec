@@ -194,6 +194,7 @@ IS [NOT] INFINITE   무한
           ,TRUNC(3.941592)
           ,TRUNC(314.1592)
           ,TRUNC(3.141592, 3) -- 특정위치부터 절삭
+          ,TRUNC(31415.92, -3)
     FROM dual;
     
     4) CEIL 절상
@@ -243,7 +244,7 @@ IS [NOT] INFINITE   무한
     SELECT SYSDATE -3 "DATE" -- '일'이 변함
     FROM dual;
     
-    SELECT SYSDATE + ( 2/24) "DATE" -- 시간 바꾸기 (두시간 뒤)
+    SELECT SYSDATE - ( 2/24) "DATE" -- 시간 바꾸기 (두시간 전)
     FROM dual;
     
     --SELECT SYSDATE - 날짜 해버리면 두 날짜 사이의 간격이 출력됨
@@ -253,12 +254,12 @@ IS [NOT] INFINITE   무한
     
     --문제_ 개강일로부터 현재 며칠째인가? *몇일이 지났는가?
     
-    SELECT SYSDATE,TRUNC(SYSDATE) - TRUNC(TO_DATE('2024-07-01'))
+    SELECT SYSDATE,TRUNC(SYSDATE) - TRUNC(TO_DATE('2024-07-01'))+1
     FROM dual;
     
     -- 근무 개월 수? 
     SELECT ename, hiredate, SYSDATE 
-        , MONTHS_BETWEEN( SYSDATE, hiredate ) "근무 개월 수"
+        , TRUNC(MONTHS_BETWEEN( SYSDATE, hiredate ) ) "근무 개월 수"
         , MONTHS_BETWEEN( SYSDATE, hiredate )/12 "근무 년수"
     FROM emp;
     
@@ -328,7 +329,7 @@ IS [NOT] INFINITE   무한
     
     SELECT *
     FROM insa
-    WHERE TO_CHAR(ibsadate, 'YYYY') = 1998; --그냥 해봄
+    WHERE TO_CHAR(ibsadate, 'YYYY') = '1998'; --그냥 해봄
     
     
     -일반
@@ -398,23 +399,29 @@ IS [NOT] INFINITE   무한
 -- 그룹 당 하나의 결과를 출력한다
 
 -- * 카운트하면 NULL도 셈
-    SELECT COUNT(*), COUNT(ename), COUNT(sal), COUNT(comm)
+    SELECT COUNT(*), COUNT(ename), COUNT(sal), COUNT(comm) "COUNT(comm)"
            --,sal 집계함수와 일반열을 같이 쓸 수 없다.
            ,SUM(sal)
            ,SUM(sal)/COUNT(*) AVG_SAL 
-           ,SUM(comm)/COUNT(*) AVG_SAL 
-           ,AVG(comm) 
+           ,SUM(comm)/COUNT(*) AVG_SAL2
+           ,AVG(comm) --다른 이유 : AVG는 평균 셀 때 NULL인 애들은 분모로 취급안함
            ,MAX(sal)
            ,MIN(sal)
-           --다른 이유 : AVG는 평균 셀 때 NULL인 애들은 분모로 취급안함
+           
     FROM emp;
 
     SELECT *
-    FROM emp;
+    FROM emp
+    WHERE deptno =30;
 
 --총 사원수 조회
 --각 부서별 사원수 조회
 
-SELECT COUNT(
-FROM emp;
-WHERE deptno=10;
+SELECT deptno 부서번호 ,COUNT(
+                    CASE deptno WHEN 10 THEN 'o' 
+                                WHEN 20 THEN 'o' 
+                                WHEN 30 THEN 'o' END
+                    ) "사원수"
+FROM emp
+GROUP BY deptno;
+--deptno로 그룹바이 했으니 그다음 쿼리는 다 그룹바이 기준대로 찢어져서 담김
