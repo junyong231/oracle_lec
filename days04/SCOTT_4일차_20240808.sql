@@ -324,7 +324,7 @@ IS [NOT] INFINITE   무한
         ,TO_CHAR( (sal + NVL(comm,0) ) *12 , '9G999G999D00')
     FROM emp;
     
-    SELECT name, TO_CHAR( ibsadate , 'YYYY"년" MM"월" DD"일 "DAY' ) --""로 문자열도 끼워넣을 수 있다
+    SELECT name, TO_CHAR( ibsadate , 'YYYY"년" MM"월" DD"일 "DY' ) --""로 문자열도 끼워넣을 수 있다
     FROM insa;
     
     SELECT *
