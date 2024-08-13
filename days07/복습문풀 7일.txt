@@ -1,0 +1,49 @@
+--[문제] emp. dept 테이블에서 사원 존재하지 않는 부서번호 부서명
+
+--(문제) 인사테이블에서 각부서별 여자인원수 파악해서 5명 이상인 부서 정보 출력 ?
+
+-- [문제] insa 테이블
+--     [총사원수]      [남자사원수]      [여자사원수] [남사원들의 총급여합]  [여사원들의 총급여합] [남자-max(급여)] [여자-max(급여)]
+------------ ---------- ---------- ---------- ---------- ---------- ----------
+--        60                31              29           51961200                41430400                  2650000          2550000
+
+
+
+-- [문제] emp 테이블에서~
+--      각 부서의 사원수, 부서 총급여합, 부서 평균급여
+
+--피벗 문제
+-- 1. 테이블 설계 잘못된 상황에서 쿼리 이상하다고 질문했던 상황
+-- DDL문으로 테이블 만들자
+
+CREATE TABLE tbl_pivot
+(
+    no NUMBER PRIMARY KEY 
+     ,name VARCHAR(20) NOT NULL 
+    ,jumsu NUMBER(3) 
+ );
+SELECT *
+FROM  tbl_pivot;
+
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 1, '박예린', 90 );  -- kor
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 2, '박예린', 89 );  -- eng
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 3, '박예린', 99 );  -- mat
+ 
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 4, '안시은', 56 );  -- kor
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 5, '안시은', 45 );  -- eng
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 6, '안시은', 12 );  -- mat 
+ 
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 7, '김민', 99 );  -- kor
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 8, '김민', 85 );  -- eng
+INSERT INTO TBL_PIVOT ( no, name, jumsu ) VALUES ( 9, '김민', 100 );  -- mat 
+
+COMMIT; 
+
+SELECT *
+FROM  tbl_pivot;
+
+--질문   이름 국 영 수
+            ㅇㅇ 10 20 30 이렇게 나오게??
+
+--각 부서별 직위별 최소 사원 수, 최대 사원수
+-- FIRST/LAST 분석함수 사용해서 풀이....

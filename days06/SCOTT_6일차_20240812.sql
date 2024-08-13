@@ -601,8 +601,17 @@ FROM insa; --11개의 도시가 있다
     FROM insa
     GROUP BY buseo, city
     ORDER BY buseo, city;
--- 오라클 10g부터 추가된 기능 : PARTITION BY OUT JOIN ..?
+-- 오라클 10g부터 추가된 기능 : PARTITION BY OUTER JOIN ..?
 
+WITH c AS (
+        SELECT DISTINCT city
+        FROM insa
+)
+SELECT buseo, c.city, COUNT(num)
+FROM insa i PARTITION BY(buseo) RIGHT OUTER JOIN c ON i.city = c.city 
+--파티션을 부서로 나누고 난 뒤에 -> 아우터 조인(city 다 가진 테이블)
+GROUP BY buseo, c.city
+ORDER BY buseo, c.city;
 
 
 
