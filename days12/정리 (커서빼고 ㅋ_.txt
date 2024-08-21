@@ -1,0 +1,104 @@
+익명 프로시저 구문
+DECLARE
+  - 변수선언
+  - 상수선언 (CONSTANT)
+BEGIN
+  - SELECT INSERT 뭐 다됨
+EXCEPTION
+END;
+
+[변수에 값 대입]
+empno (john것)를 받을 변수 vempno를 선언했다면
+
+SELECT empno INTO vempno
+FROM emp
+WHERE ename = john;
+
+
+ 테이블명.컬럼명%TYPE;
+해당 컬럼의 자료형 그대로 주입
+
+[ ROWTYPE% ]
+테이블 전체 데이터타입 다 받아오는 변수
+
+vemprow emp%ROWTYPE;
+
+하면 앞으로는 ename과 데이터 타입 맞춘 변수는 
+vemprow.ename 이런식으로 뽑으면 됨
+
+[ RECORD% ]
+
+TYPE EmpDeptType IS RECORD
+(
+        deptno dept.deptno%TYPE,
+        dname dept.dname%TYPE, 
+        empno emp.empno%TYPE,
+        ename emp.ename%TYPE, 
+        pay NUMBER 
+); -- 한 박스 선언해놓고 레코드변수로 묶음 (구조체)
+	테이블 달라도 ok
+
+vedrow EmpDeptType; --하나의 새로운 자료형 이름이 됨
+
+vedrow.deptno
+vedrow.empno 
+이런식으로 불러오면 됨
+
+
+
+
++) vnum := :bindNumber 숫자입력받기
+
+[제어문 구문 - if]
+
+IF 조건식 THEN
+ELSE 
+END IF;
+
+[제어문 구문 - ELSIF]
+
+IF 조건식 THEN 식;
+ELSIF 조건식 THEN 식;
+:
+ELSE 식 ;
+END IF;
+
+[제어문 구문 - while]
+
+WHILE (조건식) 
+LOOP
+	반복할 구문;
+END LOOP;
+
+ 
+LOOP
+	반복할 구문
+	EXIT WHEN (조건식) ;
+END LOOP;
+
+
+[제어문 구문 - for문]
+
+FOR 변수 IN [리버스-거꾸로] (시작값 .. 끝값)
+LOOP
+	반복할 구문
+END LOOP;
+
+
+
+[커서]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
