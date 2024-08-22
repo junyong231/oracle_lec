@@ -1,0 +1,79 @@
+저장 프로시저 구문
+
+CREATE OR REPLACE PROCEDURE 프로시저명
+(
+	매개변수 선언
+)
+IS 
+	변수/상수 선언
+BEGIN
+	실행구문
+
+EXCEPTION
+END;
+
+tbl_emp에서 사원번호를 매개변수로 받아서
+해당 사원을 삭제하는 저장 프로시저 ??
+
+CREATE OR REPLACE PROCEDURE up_delemp
+(
+	pempno [ IN ] tbl_emp.empno%TYPE
+)
+IS --지금은 선언할 것이 딱히 없다
+
+BEGIN
+
+DELETE FROM tbl_emp
+WHERE empno = pempno ;
+
+COMMIT;
+
+END;
+
+
+-- 저장 프로시저 실행방법 (3가지)
+
+-- 1) EXECUTE 문에 의한 실행
+
+EXEC up_delemp ( 7022 );
+이러면 함수 쓰는것 마냥 7022인 사원 지워짐
+
+
+-- 2) 익명 프로시저에서 호출해서 실행
+
+또다른 프로시저의 BEGIN 구문에서
+up_delemp ( 7022 );
+하면 먹힘
+
+-- 3) 또 다른 저장 프로시저에서 호출해서 실행.
+
+또다른 프로시저의 BEGIN 구문에서
+up_delemp ( 7022 );
+하면 먹힘
+
+
+매개변수를 이렇게 선언했다면 (둘 다 같음)
+    pdname IN tbl_dept.dname%TYPE DEFAULT NULL,
+    ploc IN tbl_dept.loc%TYPE := NULL
+NULL, 즉 아무것도 입력하지 않아도 된다
+매개변수 0~2개 입력 가능한 상태인거지 위 기준.
+
+대신 처리할 때 (BEGIN)에서 NVL(pdname, 원래name받아논거) 
+이런 식으로 처리해야 NULL이 안뜨고 이전 것이 떠서 깔끔쓰.
+
+
+-- 저장함수
+
+저장프로시저랑 거의 같으나 BEGIN 마지막에
+RETURN 리턴값; 
+이 있다
+
+
+
+
+
+
+
+
+
+
