@@ -982,7 +982,7 @@ CREATE TABLE tbl_exam2
 create or replace trigger ut_log
 AFTER -- 로그니까 한 다음 남김 = 애프터
 insert OR delete OR UPDATE ON tbl_exam1 --트리거가 테이블1에 정의되었기 때문에 :OLD.name 이런식으로 소환가능
-for each row -- 매 한줄한줄마다 
+for each row -- 매 한줄한줄마다 --이게 있어야 :OLD, :NEW 사용 가능
 
 --DECLARE
     -- 뱐수선언
