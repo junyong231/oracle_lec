@@ -258,3 +258,31 @@ END;
 EXEC UP_NDSSEARCHEMP(1, '20'); 
 EXEC UP_NDSSEARCHEMP(2, 'L'); 
 EXEC UP_NDSSEARCHEMP(3, 's'); 
+
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE PROCEDURE test__
+
+IS 
+now_time DATE;
+
+BEGIN
+
+DBMS_OUTPUT.PUT_LINE ( TO_CHAR(sysdate, 'yyyy-mm-dd HH:MI:SS') );
+
+SELECT sysdate INTO now_time
+FROM dual;
+
+DBMS_OUTPUT.PUT_LINE ( TO_CHAR(now_time,'yyyy-mm-dd HH:MI:SS') );
+
+END;
+
+EXEC test__;
+
