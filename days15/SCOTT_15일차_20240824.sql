@@ -101,7 +101,8 @@ END employee_pkg;
 CREATE OR REPLACE PACKAGE BODY employee_pkg 
 AS 
    
-      procedure print_ename(p_empno number) is 
+      procedure print_ename(p_empno number) 
+      is 
          l_ename emp.ename%type; 
        begin 
          select ename 
