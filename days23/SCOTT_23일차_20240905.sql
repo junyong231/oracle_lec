@@ -84,5 +84,14 @@ DELETE
 FROM tbl_cstvsboard
 WHERE seq = ?
 
+UPDATE tbl_cstvsboard
+SET  title = ?, content = ?
+WHERE seq = ?;
+
+--제목검색
+SELECT *
+FROM tbl_cstvsboard
+WHERE REGEXP_LIKE ( title, 'z' , 'i' );
+
 
 
